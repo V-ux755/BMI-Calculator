@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+    <style>
+        body, main {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            gap: 20px;
+            background-color: #e0f7fa;
+            transition: background-color 0.5s ease;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #333;
+        }
+
+        main input, main button {
+            border: none;
+            border-radius: 8px;
+            width: 50%;
+            padding: 12px;
+            font-size: 1rem;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        main input {
+            background-color: #ffffff;
+            color: #333;
+            text-align: center;
+        }
+
+        main input::placeholder {
+            color: #aaa;
+            font-size: 1rem;
+        }
+
+        main button {
+            background-color: #00796b;
+            color: #fff;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        main button:hover {
+            background-color: #004d40;
+        }
+
+        section p {
+            font-size: 1.2rem;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>BMI Calculator</h1>
+        <input type="text" name="weight" id="weight" placeholder="Enter your weight in kg">
+        <input type="text" name="height" id="height" placeholder="Enter your height in meters">
+        <button type="submit">Check your BMI</button>
+
+        <section>
+            
+        </section>
+    </main>
+
+    <script>
+        const btn = document.querySelector('button');
+        const height = document.querySelector('#height');
+        const weight = document.querySelector('#weight');
+        const sect = document.querySelector('section');
+        const result = document.createElement('p');
+        const status = document.createElement('p');
+        const recommendation = document.createElement('p');
+        const main = document.querySelector('main');
+
+        btn.addEventListener('click', calculateBMI);
+
+        function calculateBMI() {
+            sect.append(result, status, recommendation);
+
+            
+            const bmi = (isNaN(weight.value) || isNaN(height.value) || weight.value === "" || height.value === "") ?
+                "Please enter valid values for weight and height" :
+                weight.value / height.value ** 2;
+
+            if (typeof bmi === "string") {
+                result.innerHTML = bmi;
+                status.innerHTML = "";
+                recommendation.innerHTML = "";
+                main.style.backgroundColor = "#ffcdd2"; 
+            } else {
+                result.innerHTML = `Your BMI: ${bmi.toFixed(2)} kg/m&sup2;`;
+
+                // Apply background color based on BMI category
+                if (bmi < 18.5) {
+                    status.innerHTML = 'You are underweight';
+                    recommendation.innerHTML = 'Eat more, exercise!';
+                    main.style.backgroundColor = "#fff9c4"; 
+                } else if (bmi < 24.5) {
+                    status.innerHTML = 'Healthy weight';
+                    recommendation.innerHTML = 'Keep it up!';
+                    main.style.backgroundColor = "#b3e5fc"; 
+                } else if (bmi < 30) {
+                    status.innerHTML = 'Overweight';
+                    recommendation.innerHTML = 'Exercise more, eat healthier!';
+                    main.style.backgroundColor = "#ffe0b2";
+                } else {
+                    status.innerHTML = 'Obese';
+                    recommendation.innerHTML = 'Consult a doctor, exercise!';
+                    main.style.backgroundColor = "#ef9a9a"; 
+                }
+            }
+        }
+    </script>
+</body>
+</html>
