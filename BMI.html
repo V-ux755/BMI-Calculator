@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+    <style>
+        main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            gap: 30px;
+            background-color: chartreuse;
+        }
+
+        main input {
+            outline: none;
+            border: none;
+            border-radius: 15px;
+            width: 25%;
+            padding-block: 10px;
+            padding-inline-start: 10px;
+            background-color:aquamarine;
+            color: black;
+        }
+
+        main input::placeholder {
+            color: black;
+            font-size: 15px;
+            text-align: center;
+        }
+
+        main button {
+            border-radius: 15px;
+            border: none;
+            padding-block: 10px;
+            width: 25%;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>BMI Calculator</h1>
+        <input type="text" name="weight" id="weight" placeholder="Enter your weight in meters">
+        <input type="text" name="height" id="height" placeholder="Enter your height in kg">
+        <button type="submit">Check your BMI</button>
+
+        <section>
+
+        </section>
+    </main>
+   
+</body>
+    <script>
+        const btn = document.querySelector('button')
+        const height = document.querySelector('#height')
+        const weight = document.querySelector('#weight')
+        const sect = document.querySelector('section')
+        const result = document.createElement('p')
+        const status = document.createElement('p')
+        const recommendation = document.createElement('p')
+
+        btn.addEventListener('click', calculateBMI)
+
+        function calculateBMI() {
+            sect.append(result, status, recommendation)
+            // const bmi = weight.value / height.value ** 2
+            const bmi = (isNaN(weight.value) || isNaN(height.value) || weight.value === "" || height.value === "") ?
+            "Please enter valid values for weight and height" :
+            weight.value / height.value ** 2;
+
+            // result.innerHTML = bmi.toFixed(2)
+            // status.innerHTML = bmi < 18.5 ? ' You are underweight' : bmi < 24.5 ?
+            // 'Healthy weight' : bmi < 30 ? 'overweight' : 'Obese'
+
+        if (typeof bmi === "string") {
+            result.innerHTML = bmi;
+            status.innerHTML = "";
+            recommendation.innerHTML = "";
+        } else {
+            result.innerHTML = `Your BMI: ${bmi.toFixed(2)}kg/m&sup2;`;
+            status.innerHTML = bmi < 18.5 ? 'You are underweight' : bmi < 24.5 ?
+                'Healthy weight' : bmi < 30 ? 'Overweight' : 'Obese';
+
+            recommendation.innerHTML = bmi < 18.5 ? 'Eat more, exercise!' : bmi < 24.5 ? 'Keep it up!' : bmi < 30 ? 'Exercise more, eat healthier!' :'Consult a doctor, exercise!' 
+
+        }
+
+        }
+    </script>
+
+</html>
